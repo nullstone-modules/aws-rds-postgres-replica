@@ -1,0 +1,13 @@
+org_name: nullstone
+name: aws-rds-postgres-replica
+friendly_name: RDS Postgres Read Only Replica
+description: Creates a read-only replica of an existing RDS Postgres cluster
+category: datastore
+subcategory: ""
+provider_types:
+    - aws
+platform: postgres
+subplatform: rds-readonly-replica
+type: postgres/aws
+appCategories: []
+is_public: true
