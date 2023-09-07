@@ -9,7 +9,7 @@ output "db_instance_id" {
 }
 
 output "db_master_secret_name" {
-  value       = data.ns_connection.postgres.db_master_secret_name
+  value       = data.ns_connection.postgres.outputs.db_master_secret_name
   description = "string ||| The name of the secret in AWS Secrets Manager containing the password"
 }
 

@@ -1,11 +1,9 @@
 resource "aws_db_instance" "this" {
   #bridgecrew:skip=CKV_AWS_157: "Ensure that RDS instances have Multi-AZ enabled"
   identifier                  = local.resource_name
-  replicate_source_db         = data.ns_connection.postgres.db_instance_id
+  replicate_source_db         = data.ns_connection.postgres.outputs.db_instance_id
   db_subnet_group_name        = aws_db_subnet_group.this.name
   parameter_group_name        = aws_db_parameter_group.this.name
-  engine                      = "postgres"
-  engine_version              = var.postgres_version
   allow_major_version_upgrade = true
   auto_minor_version_upgrade  = true
   instance_class              = var.instance_class
