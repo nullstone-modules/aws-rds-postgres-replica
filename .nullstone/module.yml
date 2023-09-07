@@ -7,7 +7,7 @@ subcategory: ""
 provider_types:
     - aws
 platform: postgres
-subplatform: rds-readonly-replica
+subplatform: rds-readonly
 type: postgres/aws
 appCategories: []
 is_public: true

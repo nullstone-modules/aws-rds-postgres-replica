@@ -8,6 +8,11 @@ output "db_instance_id" {
   description = "string ||| ID of the Postgres instance"
 }
 
+output "db_master_secret_name" {
+  value       = data.ns_connection.postgres.db_master_secret_name
+  description = "string ||| The name of the secret in AWS Secrets Manager containing the password"
+}
+
 output "db_endpoint" {
   value       = aws_db_instance.this.endpoint
   description = "string ||| The endpoint URL to access the Postgres instance."
