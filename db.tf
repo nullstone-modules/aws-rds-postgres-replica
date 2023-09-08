@@ -7,24 +7,18 @@ resource "aws_db_instance" "this" {
   auto_minor_version_upgrade  = true
   instance_class              = var.instance_class
   multi_az                    = var.high_availability
-  allocated_storage           = var.allocated_storage
   storage_encrypted           = true
   storage_type                = "gp2"
   port                        = local.port
-  vpc_security_group_ids      = [data.ns_connection.postgres.outputs.security_group_id]
+  vpc_security_group_ids      = [data.ns_connection.postgres.outputs.db_security_group_id]
   tags                        = local.tags
 
   iam_database_authentication_enabled = true
 
   apply_immediately = true
 
-  // final_snapshot_identifier is unique to when an instance is launched
-  // This prevents repeated launch+destroy from creating the same final snapshot and erroring
-  // Changes to the name are ignored so it doesn't keep invalidating the instance
-  final_snapshot_identifier = "${local.resource_name}-${replace(timestamp(), ":", "-")}"
-
-  backup_retention_period = var.backup_retention_period
-  backup_window           = "02:00-03:00"
+  // this must be set to null in order to delete this replica
+  final_snapshot_identifier = null
 
   enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
   monitoring_interval             = 5
