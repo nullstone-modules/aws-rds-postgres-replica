@@ -17,8 +17,7 @@ resource "aws_db_instance" "this" {
 
   apply_immediately = true
 
-  // this must be set to null in order to delete this replica
-  final_snapshot_identifier = null
+  skip_final_snapshot = true
 
   enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
   monitoring_interval             = 5
