@@ -18,6 +18,11 @@ output "db_endpoint" {
   description = "string ||| The endpoint URL to access the Postgres instance."
 }
 
+output "db_security_group_id" {
+  value       = data.ns_connection.postgres.outputs.db_security_group_id
+  description = "string ||| The ID of the security group attached to the Postgres instance."
+}
+
 output "db_log_group" {
   value       = aws_cloudwatch_log_group.this.name
   description = "string ||| The name of the Cloudwatch Log Group where postgresql logs are emitted for the DB Instance"

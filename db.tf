@@ -11,6 +11,7 @@ resource "aws_db_instance" "this" {
   storage_encrypted           = true
   storage_type                = "gp2"
   port                        = local.port
+  vpc_security_group_ids      = [data.ns_connection.postgres.outputs.security_group_id]
   tags                        = local.tags
 
   iam_database_authentication_enabled = true

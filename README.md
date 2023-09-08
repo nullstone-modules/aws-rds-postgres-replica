@@ -2,6 +2,14 @@
 
 This is a Nullstone module to create a read-only replica of an existing RDS Postgres cluster.
 
+This read-only replica will be created in the same VPC and subnet group as the source cluster.
+AWS does not allow the creation of a read-only replica in a different subnet group.
+The only exception is if the replica is created in a different region, which is not supported by this module.
+
+The result of this is:
+If the source cluster is in a private subnet, the replica will also be in a private subnet and can not be made public.
+And vice versa, if the source cluster is in a public subnet, the replica will also be in a public subnet.
+
 ## Security & Compliance
 
 Security scanning is graciously provided by Bridgecrew. Bridgecrew is the leading fully hosted, cloud-native solution providing continuous Terraform security and compliance.
