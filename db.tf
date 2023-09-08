@@ -2,7 +2,6 @@ resource "aws_db_instance" "this" {
   #bridgecrew:skip=CKV_AWS_157: "Ensure that RDS instances have Multi-AZ enabled"
   identifier                  = local.resource_name
   replicate_source_db         = data.ns_connection.postgres.outputs.db_instance_id
-  db_subnet_group_name        = aws_db_subnet_group.this.name
   parameter_group_name        = aws_db_parameter_group.this.name
   allow_major_version_upgrade = true
   auto_minor_version_upgrade  = true
@@ -12,9 +11,7 @@ resource "aws_db_instance" "this" {
   storage_encrypted           = true
   storage_type                = "gp2"
   port                        = local.port
-  vpc_security_group_ids      = [aws_security_group.this.id]
   tags                        = local.tags
-  publicly_accessible         = var.enable_public_access
 
   iam_database_authentication_enabled = true
 
@@ -37,13 +34,6 @@ resource "aws_db_instance" "this" {
   }
 
   depends_on = [aws_cloudwatch_log_group.this, aws_cloudwatch_log_group.upgrade]
-}
-
-resource "aws_db_subnet_group" "this" {
-  name        = local.resource_name
-  description = "Postgres db subnet group for postgres cluster"
-  subnet_ids  = var.enable_public_access ? local.public_subnet_ids : local.private_subnet_ids
-  tags        = local.tags
 }
 
 resource "aws_iam_role" "monitoring" {
